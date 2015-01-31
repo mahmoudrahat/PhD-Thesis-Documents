@@ -1,0 +1,643 @@
+Hello. Welcome to course of Computer Vision. My name is Jitendra Malik, and I am in the department
+of EECS at UC, Berkeley.
+So, let's begin with the beginning. A camera 
+creates an image of the external world.
+And computer vision is the science, and engineering discipline which is concerned with making
+inferences about this external world, 
+given one or more of its images.
+I mean the part of Science and 
+Engineering. Science comes in because
+there are fundamental principles associated 
+with the physics of image formation and
+statistical regularities in the external world which make this enterprise at all possible.
+It's  engineering, because there are many, 
+many practical applications of what we study
+in this course and we get to see some of them.
+Let's begin with what's in an image. So here's this image. You might look at it  and say there's a tiger and grass.
+But what does the computer program see? 
+For the computer program, its just a bunch of pixels,
+and they have some values, some RGB values and here is another window, and there are some other RBG values.
+The only way we get any meaning out of this
+is by the activity of the brain.
+It's the humans that perceive structure 
+in it, otherwise you just have an area of values.
+The goal in Computer Vision is to give computers
+the same capability. In the broadest sense our goal
+is to go from pixels to perception. 
+So let's begin with this image.
+What can we do with this image? One of the 
+things we can do is to divide up the image
+into various regions. So here, I marked 
+out a region, corresponding to the tiger.
+I can describe that region, I can say its orange. 
+I can say that it has some texture stripes in it.
+We can go further. We can attach some semantic labels. 
+We can say there is water, grass, tiger, sand and so on.
+We can continue this process further. Not only 
+can we label the tiger, but we can label parts of the
+tiger such as its back, head, eye, mouth, and so on. 
+So, this is what we humans can perceive in an image,
+and the goal of computer vision is 
+to achieve something similar to this.
+Once upon a time we had a very feed-forward 
+processing view of vision and there were various
+theories and models constructed in which we 
+started out by analyzing local and neighborhoods
+of an image. We moved on from that to analyzing 
+the surfaces and contours of the object
+so I'm trying to show you here the surfaces corresponding 
+to the tiger, the grass, water and so on.
+And then finally we went to high-level inferences 
+about the scenes and objects in the scenes.
+Each of these stages of processing had natural 
+techniques that could be associated with them.
+For example, if you're analyzing neighborhoods of images 
+then image processing is the canonical technique
+to be used and linear filtering, convolution, and so on.
+When we try to analyze the image at the 
+levels contours and surfaces, that's what
+is called mid-level vision, and here is were 
+we have grouping operations and inferences
+about figure ground and the surface 
+attributes of the scene. And finally we get
+to high-level vision where recognition is 
+the main goal and this is where one draws
+on statistical techniques such as pattern 
+recognition, classification, etc.
+So, this feed forward view of vision is regarded
+as rather simplistic these days. The way we think
+about it now, is that we  think that vision has 3 
+interconnected processes. One of these is
+recognition of objects and activities
+so giving objects names like tiger, grass, and so on
+Another process is the one of reorganization or 
+sometimes its called grouping and segmentation.
+These involve inferences such as 
+"this set of pixels belong together to one object"
+and then we have reconstructing 3D structure. By that 
+we mean recovering the depths of objects in the scene,
+how far away various objects are with respect 
+to the camera. So that's the third  process.
+And all these processes
+interrelate. So, the results of
+recognition can help with reconstruction, the results of reconstruction can help with recognition, and so on and so forth.
+So let's start talking about the state of the art of in recognition.
+One of the earliest problems that was tackled in 
+computer vision was that of handwritten digit
+recognition. And there are some standard 
+data sets, one called MNEST, one called
+USBS, and you can search for these on the 
+Web. And we are by now pretty good at this
+problem. So, one of the pioneers in this 
+area is (...?...), and he has developed
+radius theorem and network architectures, 
+For this problem. And, he has shown that
+these architectures can give error rates 
+as low as on the order of 0.5%
+on these data sets. And the resulting 
+systems are quite faster, and these can be
+used in practice, and are being used in 
+practice for check reading and so on.
+There are a number of different methods 
+out there which manage to achieve this.
+I'd mentioned, like to mention randomized 
+decision trees, because of variations
+what is used in, some of the, the work on 
+figuring out body parts in the algorithm
+used in the Kinect system for example, 
+under the rubric of random forests.
+So moving right along, there are other 
+problems we can do quite well at.
+For example, you've all encountered captures, 
+these distorted text, that you have to
+figure out what the text is to get a free 
+email account, or get access to some
+website, and so. Earlier line of work that 
+we did some time ago, we showed that
+these can in fact be recognized by 
+computer programs. So maybe standard OCR
+programs can't do this job, but the most 
+advanced computer vision techniques can do
+a perfectly good job at identifying the
+words even though they are in messed up
+background or distorted in some way.
+So, let's talk a bit about general object
+category recognition. Humans can recognize
+that all of these are faces even though
+they look quite different from each other.
+Or that all of these are flowers even the,
+though they look different from each other.
+And this is one of the fundamental capabilities 
+that we wish to give computer vision systems.
+So one of the classic data sets in this 
+was collected at Caltech,
+and it's called the Caltech 101 data set.
+And this was collected by Fifi and Perona
+back in 2004. So what they did was to
+collect examples from the web of images of
+101 different categories, and these could
+include pianos, dogs, cats, faces, and so forth.
+And for each of these categories they 
+collected something like 30 to 300 images.
+The images themselves were rather
+simple. They had typically just one object
+in the center of the image. But the
+question was, would computer programs be
+able to find which of these 101 
+different categories that object was.
+And this was a challenge now thrown open
+to the entire computer vision community.
+And what I'm showing you here are some
+curves which are performance curves where
+on the Y axis we're, there is some measure
+of performance, which is, what percentage
+of the object were classified correctly?
+And on the X axis here are examples.
+How many examples were used? So, for now 
+you can focus on just one vertical column
+corresponding to fifteen training
+examples. So, what's interesting is that
+when the data-set first came out,
+performance was at about 16% correct.
+In a sense that's terrible. That
+means that 84 percent of the time the
+program was wrong. But a positive way to
+think about it is that if we were just
+performing a chance, performance would be
+just 1%. So 16% was
+significantly better than chance. What's
+very interesting is that in three years,
+due to the efforts of many different
+groups, performance went up from 16%
+to 65% correct. Which is a
+factor of 4 improvement in performance.
+This is fantastic, this an indication of a field 
+that is finally getting its act together.
+And, today we don't work that much on this data set
+anymore, because we prefer data sets where
+there will be multiple objects in the scene.
+But, this was a good indicator that
+the field was making progress on recognition. 
+So I will give you an example of what kinds of
+data sets are popular these days. 
+The so called Pascal visual object challenge.
+And this has been the dominant data set 
+in the field for the last five years.
+And this has much more complex scenes. 
+As you can see in these images, you typically
+have multiple objects in an image. For example 
+this image you see a TV monitor, and a person,
+and a keyboard, and so on an so forth. 
+In this image you have a sheep and the
+presence of grass and the goal of this
+challenge was to test whether we could do
+recognition in these more difficult
+circumstances. In these more difficult
+circumstances the goal was we should be
+able to mark that a bounding box
+corresponding to the object. So somehow
+you can mark the position of the sheep, or
+the position of the dog. And the way we
+mark these is by drawing a bounding box.
+And when I say we, I really mean the
+computer program. And the way we judge
+performance here is by, so called
+precision-recall curves. And you'll
+encounter this idea repeatedly in the
+course. So precision is measured here on
+the X, on the, on the Y axis. And, let me
+use a... So precision here is on the Y axis.
+So precision means what percentage of the
+objects that, computer program declared
+were bicycles were actually bicycles. 
+So ideally, you want precision to be 1.
+And then, we also measure recall. Recall is,
+how many of the bicycles in the data set
+did we manage to find? And of course you
+would ideally want the recall to be 1
+and precision to be 1. In practice, we
+are not so lucky. And so what happens is
+that there is some threshold parameter,
+and if we have a more lax threshold, you
+get high recall, if you get more strict
+threshold, you have high precision.
+And typically you get a curve, as shown here.
+By varying the threshold, and the
+threshold here is being made more lax, and
+as a result you increase recall and lower
+precision. So the ideal point, of course,
+would be a precision recall of 1, as I
+marked here. And different algorithms
+have different curves, and those are
+shown here. And you can get to these curves
+by searching for Pascal VOC on the web.
+And the area under this curve
+becomes a measure of the technique.
+And ideally a curve would have an area under the curve of (equal to) 1. But in practice, we get areas such
+as 55.3%, or 54.3%. So in a 
+certain sense, these numbers which
+are close to 50 percent tell us that we 
+are sort of halfway through solving this
+problem of detection of bicycles.
+Let's move along to analysis of images of people. 
+People are some of the most..., one of the
+most difficult categories to analyze.
+Just, if you look at this image, you will
+see the variety in appearance, due to
+clothing, due to pose, due to occlusion,
+and so on and so forth. And yet, people
+are a very important category because if
+we can analyze images of people, there are
+a variety of applications that will become
+accessible to us. So. I'll give you an
+example. Even from single images, just the
+pose and appearance of a person can tell
+you whether a person is falling or running
+or walking or riding a horse. And, in
+fact, computer programs are able to do this.
+Let me look at, look at actions more
+generally. So there are a variety of actions
+that we are interested in. Some of
+these actions correspond to movement and
+posture change. So, these are examples,
+run walk, crawl. In fact you can think of actions
+as English words, and objects as nouns.
+A large class of actions have to do with object 
+manipulation. So, these include the examples here.
+Pick an object, carry an object, hold an object, 
+lift an object, and so on. And we would like to
+able to describe what's happening in an
+image by using these terms.
+So, of course, actions include conversational gesture. 
+I mean, in this example, suppose I move my
+hands about. That's conversational
+gesture. And of course, sign language.
+Recognition is not limited to objects and
+actions. We might be..., we are able to
+recognize materials. So in this example,
+looking at this image, you might be able
+to guess what's the material. Is it felt,
+polyester, rough plaster, leather, concrete, and so on.
+And in computer vision we seek to develop 
+techniques for recognizing materials.
+So let's return to the central problems of vision. 
+I've spent a lot of time talking about the different
+sub-aspects of the problem of recognition
+of objects and activities. Lets turn now to
+reorganization. So the task of organizing
+an image from pixels into objects.
+So here are some examples, segmentations 
+from the work of segmentation data set.
+What we did was we took images, such as 
+shown here in the left column.
+And for each of these images what we did 
+was we asked various human subjects to
+look at these images and to mark out the 
+objects in them. And what you see are different
+people's segmentations of these images.
+But what you see clearly is that people are able to
+mark the objects. So if you look at this example
+they can clearly mark the two wolves. In some, 
+some humans are more detailed.
+They mark out all the object and the 
+parts of objects, and some will do less.
+It's clear that we have this
+capability of marking out the set of
+pixels which correspond to a single
+object. This is an ability that we wish to
+have computer programs (to) replicate.
+Here are more examples. So, this..., I like this 
+example of the butterfly on a..., on a tree.
+Because, examples of objects against the natural 
+background really challenge segmentation systems.
+Because objects evolve ... animals evolve camouflage 
+so that they can be hidden against their background.
+And that makes the task of detecting them 
+against those backgrounds particularly challenging.
+So you can see that in these examples. 
+So how do we do this? Of course we're
+gonna spend some time on this but there are a 
+number of..., so let's take a concrete example.
+So here is this..., this, this wooden bed stand 
+and then..., here is the region corresponding
+to the bed spread. And how do we find the
+boundaries between these?
+We can find the boundaries with a number 
+of low-level cues, such as brightness in color
+(one is green, one is beige), the texture. 
+This is a single image, if we had..., if we had a
+moving camera then the nearer object would
+move faster, and that would give you a cue.
+Binocular disparity if we had two
+eyes. Looking at this scene and there...,
+there, then again, we have a cue to depth.
+And finally of course we can use familiar
+configuration, we can segment out a face
+from the background once we have
+recognized that those pixels correspond to a face.
+So we'll have an opportunity to study 
+these variety of techniques later in the course.
+Okay, so now I've come to the third fundamental problem 
+of vision which is that of reconstructing 3D structure.
+How do we do this? It's very helpful to
+think about reconstruction as the inverse
+problem of computer graphics. So computer
+graphics is the forward problem.
+What graphics people are able to do is, 
+given that scene geometry,
+(by that, I mean the layout of the different objects, 
+the models of the surfaces [inaudible]
+on the scene, and so on). As well as the
+ reflectance properties (the color), the...
+the...in a more general case it's called a bidirectional 
+reflectance distribution function,
+and of course the position and
+distribution of the light sources.
+Given this, we can simulate the physics. We simulate 
+the physics of light transport, and we produce an image.
+That's what computer graphics does. 
+Computer vision in a certain sense is the inverse problem.
+We are given an image, and we want to reconstruct 
+what is the scene that gave rise to this image.
+So they can (of course) be multiple images, and..., 
+and if we are lucky.
+But our goal is to recover scene geometry, 
+the reflectances of the various objects in the scene,
+as well as the scene illuminations. 
+So, How do I do this?
+Recovery of geometry has historical roots in photogrametry 
+and the analysis of 3D queues in human vision.
+But it's worth noting that it can be done. 
+Even with single images if we have some knowledge
+of the object class. And I'll give you an example of that. 
+Multiple images make the problem easier.
+But it's not trivial, as corresponding points must be identified. Once you have found corresponding points
+then we can draw on triangulation. 
+Of course there are settings when you have an
+active camera, such as for example in the Kinect, 
+where you project a pattern on the image
+and that ability to project the pattern gives you, 
+an easy way to solve the correspondence problem.
+So let's take up some examples.
+So, here's an example from human vision,
+ where binocular stereopsis can be used.
+We have two different eyes. 
+They give you slightly different images of the scene,
+and the difference between those two images 
+is related to the depth of objects in the scene.
+So that's one thing we can do. 
+But of course we could use multiple views.
+So here's an example of, 3D models that were
+constructed of Berkeley campus.
+This is from a project going back nearly fifteen
+years, led by Paul [inaudible].
+And what they did was that they took a number of
+examples, a number of images of the leading buildings,
+such as this clocktower.  And, surrounding buildings on,
+campus. Some of these pictures were taken
+with cameras on a kite. And from these
+multiple pictures 3D models could be constructed.
+And this is of course now standard technology and 
+it's embodied in a number of different commercial products.
+But here's an interesting example. With,
+extra assumptions even one image suffices.
+So here's a reconstruction of the 3D geometry 
+of the Taj Mahal. The Taj Mahal happens to be
+a very symmetric figure, and therefore, even 
+in a single image, you get the equivalent of multiple views.
+And one can, in fact, reconstruct the 3 dimensional 
+shape of this object.
+Here is an example of [inaudible]  
+where we do not know what is the object,
+But somehow when we look at this..., this tablet 
+or whatever... we have this perception that
+there must be some grooves and there must be some ridges 
+and so on. And clearly, here all the information is
+being carried by the pattern of light and dark.
+What's worth noting is that these two images 
+that you see here are really essentially the same image,
+it's just that one is a..., one has been rotated 
+by 180 degrees. And that rotation by 180 degrees
+is enough to change your perception. In one case, what you saw as ridges, now you see as grooves.
+And why is that? Well, that has to do with... the 
+assumptions that the visual system makes
+about the posistion of light sources. So in the
+environment that we grew up in, the light
+comes from the sun and the sun is above.
+So there is going to be a certain pattern
+of shading associated with the ridge, and
+essentially when you rotate the image by
+180 degrees that assumption causes us to
+assume that the... Now instead of looking at a ridge
+we're looking at a groove.
+Of course we can make inferences about spatial layout, 
+not just the shape of a single object.
+And this is a kind of scene which is very common in
+Renaissance paintings, which showed these
+courtyards which were full of rectangular slabs. 
+And we are making a number of assumptions here.
+We assume that the slabs are of the same size 
+and shape in the scene. But they look different
+in the image because some are nearer to you and
+some are farther to you, away from you.
+This enables us to guess how far away and
+at what orientation these objects are.
+Again, the big picture is the following.
+Even when we have a single image, we are able
+to categorize the objects in... in terms of depth.
+We can say some object is in front of some other object. 
+So in this kind of an example, this simple line-drawing
+example, we can say that R1 appears  in front of 
+R2 and R2 appears in front of R3.
+And this we can do even with a single image. 
+Of course if we have multiple images such as
+in the case of stereopsis then we will use that
+information to recover what objects are...
+are nearer to you and what objects are
+farther away.
+What is all this for? In a certain sense we can 
+ask this fundamental question:
+Why do we try to recover properties of the external world?
+And it's helpful here to think about biology. 
+In biology, why did vision evolve?
+Vision evolved because it gave the organism
+which had vision some gain, some benefit.
+It had to give it some benefit in terms of
+being able to find food, or to avoid becoming food.
+So vision is always associated with the 
+ability to act in the world.
+And here, two examples of actions;
+One is locomotion. You can move about and in this case
+vision enables you to work with maps of the environment, 
+based on your previous experience and when you are
+walking about you can avoid obstacles. 
+Vision also allows you to manipulate objects.
+You can grasp objects. You can pick and place objects. 
+You can use tools. So, these are all examples of
+hand-eye coordination where the hand together with 
+the eye is used to perform action in the world.
+This is very important because just... from an evolutionary 
+point of view, a visual system which did not help with
+action would not be of much use and clearly would not have 
+any evolutionary advantage that would create favorable
+selection pressure.
+So finally let's turn to the application of computer vision.
+There are many, many examples, and pretty much
+these examples have..., at this point do not require 
+that we construct a full vision system comparable
+to a human being, but we construct some aspect 
+of this ability and that's enough for us
+to construct useful applications. For example 
+I have some here; Biometrics, identifying people.
+So, for example, you want to control access to 
+some environment, and you do it by doing face recognition.
+Computational photography; this is an
+emerging discipline over the last 10-15 years
+and essentially, the idea is that we can attach 
+a computer to the camera, and then
+we are no longer stuck 
+with the passive image captured.
+We can choose the... the imaging parameters 
+of the camera to construct better images.
+Very simple example is that nowadays when we take
+photographs often there is some program
+which is trying to detect faces and what is done with that is to make sure that the faces are in focus.
+Because the expectation is that when we take images, 
+we really want the people's faces to be in sharp focus.
+Human computer interaction is a leading
+application, because, with the help of
+a camera, you can, determine the pose of
+the human body. And of course, one of the
+leading examples of this is the Microsoft
+Kinect system which is used in gaming.
+We can create three dimensional virtual
+worlds by variations of the techniques
+that I talked about earlier for 3D
+reconstruction.
+And, again, this is a very widespread technology now.
+Content-based image retrieval... I mean, when you do
+web searches, and you want to find examples of
+images of certain categories.
+Sometimes you can do it based on text, but 
+sometimes you can also explore image content,
+Sometimes you can do it based on text, 
+but sometimes you can also explore image content,
+and many, many more. 
+I will not continue with this... this list of examples here.
+But a comprehensive list can be found at a
+website which is maintained by David Lowe.
+And I recommend you to go, check this
+website for hundreds of examples of
+companies which have computer vision products. 
+You wouldn't have noticed that in this lecture
+I've jumped back and forth between talking about 
+human vision and computer vision.
+And to me, this is..., there is a lot to be learned from
+human vision. And Let's try to get in, a bit into how and why.
+So, human vision is studied by many different scientists. 
+So, perception is a traditional discipline,
+typically studied by psychologists. And here, 
+we consider the visual system as a black box.
+We are trying to figure out what a human would
+perceive in an image, and try to construct
+a scientific theory for that. Neuroscience
+of course gets into the black box,
+and it's trying to understand what are the
+brain areas associated with..., with vision.
+And vision of course starts in the retina
+but goes on in the brain.
+What's interesting is that something like 30 to 50 
+percent of the brain is devoted to visual processing.
+Finally, there is an understanding of vision at the 
+functional level, which has to do with how the laws
+of optics and the statistics of the world we live in 
+make certain interpretation of an image much more likely.
+Now this version of the problem is equally valid for a 
+human system as well as for a computer vision system.
+We are both the... both humans and computer vision systems are equally constrained by the laws of optics,
+and the statistics of the world we live in. So at the 
+functional level, there's going to be a very good match.
+Perception and neuroscience we do not need to copy exactly. But often it has turned out that both studies
+of human vision and psychology in neuroscience 
+has been a source of wonderful inspiration
+for computer vision systems. So I'll give you another example of..., the use of..., of the functional level.
+This is not to do with vision but flight. When we consider 
+birds and airplanes, we don't build airplanes by
+imitating wings with feathers and bones and muscles 
+and so on. How are the basic principles of flight,
+the basic principles of lift using Bernoulli's principle 
+has to be the same when we consider birds or airplanes.
+And what we are trying to uncover are the counterparts of
+Bernoulli's principle. That's the science of vision.
+And, those are going to be the same when we..., 
+whether we study human vision or computer vision.
+I should take you a little bit through 
+the history of computer vision.
+It's a relatively young discipline. 
+It's like any field of computer science.
+It's more or less 50 years old. 
+We say... I picked this 1963 as a specific year
+because this is the... the year when the first PHD 
+thesis in computer vision is... was written.
+And the beginnings of the field were in artificial intelligence, imagine processing, and in pattern recognition.
+In the 1970s, it became more of a science and some
+traditional areas of applied mathematics began
+to be brought in to...to bear on the problem
+and pioneers such has Horn, Koenderink, 
+Longuet-Higgins tried to understand the...,
+the basic principles of shape from shading 
+or structure from motion, and so on.
+The 1980s, we saw vision develope as a branch 
+of applied mathematics. And a variety of different
+fields of mathematics were, brought to bear on vision, 
+including geometry, multiscale analysis,
+probabilistic modeling, control theory, 
+optimization, and [inaudible].
+1990s were very successful in the geometric aspect
+of vision. So the basic mathematics of multiple view
+geometry was worked out then, and we started to 
+get the fullest successful algorithms
+for recovering 3D structure.
+This really flowered in the 2000s in terms of practical applications. But the basics had all been laid by the 1990s.
+Statistical learning approaches which had begun 
+even back in the 1960's, and the rubric of pattern
+recognition really came to the fore in the 1990's, 
+and they had their big successes in the 2000's.
+So the 2000's we would call the era of visual 
+recognition, it's the era we saw major progress.
+Recall my earlier example, that on this Caltech 101 task, 
+performance went up from 16% correct to 65% correct
+over a period of three years, and a number of 
+advances have made this possible.
+We have new machine learning techniques 
+which have been pretty effective.
+We have access to large amounts of data, 
+large collections of images. Some estimates
+range up to a trillion images on the web. 
+Large collection of video.
+So we have a large example-set of data to work with. 
+We have the computing power to exploit this data
+and we have techniques which, have been developed 
+over the last ten, twenty years which have enabled us
+to make progress on this. So in this course 
+we'll try to go through the basics of all these.
+And, I want to welcome you to the course and just 
+in conclusion, tell you what the main topics we'll study are.
+We'll begin with the fundamentals of image formation, 
+because it's important to understand both the geometry
+and radiometry of image formation.
+After that, we'll go through basic image processing
+operations, linear filtering, convolution and so on,
+because this is the basis for edge detection and finding 
+boundaries, as well as the measurement of various image
+features which would be useful for recognition.
+Then I will go through the three fundamental R's of vision if you will;
+Recognition: we'll spend a lot of time on that. Recognition  of objects, people, activities.
+Reconstruction: this is mainly about recovering 
+3D geometry, but we'll also study properties
+such as reflectants and so on.
+And then Reorganization, which is, the grouping of
+the image into, sets of pixels corresponding to
+different objects.
+And I hope you enjoy the course and 
+I'll see you at the next lecture
